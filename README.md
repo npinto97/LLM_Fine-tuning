@@ -39,4 +39,72 @@ Both files have a similar structure to the Base responses file, the only differe
 > "Descrivi brevemente come si \u00e8 evoluto il significato della parola bomba nella lingua italiana.\nCome ha cambiato la definizione di \"bomba\" nel corso del tempo? Come sono state utilizzate le parole in relazione a esplosivi e armi nucleari, per esempio ?", "Descrivi brevemente come si \u00e8 evoluto il significato della parola coppa nella lingua italiana.\nCome ha cambiato la definizione di coperta?\nIn quale periodo storico l'uso del termine \"copertura\" assume un nuovo valore, oltre che quello strettamente legato alla protezione termica e/o acustica dei locali abitati o industriali ?\nLa prima volta in cui viene utilizzato nel senso attuale (cio\u00e8 per indicare una copertura) appare nell\u2019opera Il libro delle cose scritta da Giovanni Boccaccio tra 1350 ed i primi anni dell\u2019XI secolo .\nNel corso degli ultimi due secoli , a partire dal XVI secolo , le parole \u201ccoppatura\u201d e \u201d coppiere \u201d vengono usate con lo stesso intendendo spessore ; successivamente compaiono anche altre espressioni quali: \u201ccoppare\u201d, \u201ccovitarsi \u201d, \u201ccovertare\u201d.\nA met\u00e0 Settecento , invece , emerge uno strano fenomeno : alcune voci iniziano ad usare la forma verbale \u201ccovivere\u201d indicando cos\u00ec cospargere qualcosa oppure ricoprire completamente ci\u00f2 che sta sopra; questo uso non trova per\u00f2 riscontro nelle opere letterarie contemporanee ma solo nei testi scientifici dove esso continua fino al XIX secento .\n\n"
 
 ### List of words
+There are two .txt file corresponding to list of words:
 
+1. [list_of_words_train.txt](https://github.com/npinto97/LLM_Fine-tuning/blob/main/list_of_words_train.txt) for training.
+2. [list_of_words_test.txt](https://github.com/npinto97/LLM_Fine-tuning/blob/main/list_of_words_test.txt) for testing.
+
+Each of the two files was obtained by extracting lemmas, respectively, from the files *terms_sentences_train.jsonl* and *terms_sentences_test.jsonl*, that is the WiC dataset.
+
+### Llama3_70b outputs
+
+Llama3_70b is used to generate the dataset, fundamental for fine-tuning process. The outputs are saved in the following files:
+
+1. [output_llama_train.txt](https://github.com/npinto97/LLM_Fine-tuning/blob/main/output_llama_train.txt);
+2. [output_llama_test.txt](https://github.com/npinto97/LLM_Fine-tuning/blob/main/output_llama_test.txt).
+
+An example for *output_llama_train.txt*:
+
+>'affare': 'assistant
+>
+>La parola "affare" deriva dal latino "affarium", che significa "cosa da fare" o "occupazione". Inizialmente, nel Medioevo, la parola italiana "affare" indicava un compito o un incarico da svolgere, un'attività o >un'occupazione che richiedeva impegno e dedizione. Nel Rinascimento, il significato si estese a comprendere anche le questioni commerciali e gli interessi economici, quindi un "affare" poteva essere una >trattativa o un accordo commerciale. Nel XVIII secolo, la parola iniziò a essere utilizzata anche per descrivere una faccenda o una storia personale, spesso con connotazioni negative, come un intrigo o uno >scandalo. Nel XX secolo, il significato si è ulteriormente ampliato per includere'
+
+An example for *output_llama_test.txt*
+
+>'coppa': 'assistant
+>
+>La parola "coppa" originariamente indicava un contenitore, solitamente di metallo o ceramica, utilizzato per bere o contenere liquidi. Nel tempo, il significato si è esteso a includere anche trofei o premi >sportivi, che venivano assegnati ai vincitori di competizioni e gare. In seguito, la parola ha assunto un significato più ampio, indicando anche un'unità di misura per i liquidi, equivalente a circa mezzo litro. >Infine, è stata utilizzata anche in espressioni idiomatiche, come "coppa del mondo", per indicare un'importante competizione internazionale.
+
+### Llama prompt
+The file [promptLlama_con_esempio.txt](https://github.com/npinto97/LLM_Fine-tuning/blob/main/promptLlama_con_esempio.txt) presents a simple one-shot prompt for Llama, used to generate Llama output files. As a one-shot prompt, an example is inserted to show ideal output.
+
+>Descrivi brevemente come si è evoluto il significato della parola {parola} nella lingua italiana. Devi scrivere solo e soltanto la spiegazione senza ripetizioni. No elenchi puntati. No sintesi. No commenti. >Esempio per la parola 'apertura': "La parola apertura significava semplicemente atto di aprire o  stato di essere aperto. Con il passare del tempo, il significato si è esteso a includere anche l'atto di rendere >accessibile o disponibile qualcosa. In seguito, la parola ha assunto un significato ancora più ampio, indicando l'inizio di un nuovo ciclo o processo. Infine, è stata utilizzata anche in campo psicologico e filosofico per descrivere la capacità di essere aperti alle nuove idee e esperienze."
+
+### Terms explanations
+
+Both files contain the formatted content of the Llama output files. Each element in those .json file is characterized by:
+
+- *lemma*, containing the word (its lemma form) of the considered element in the output llama file;
+- *spiegazione*, containing the component of explanation given by the output.
+
+Also in this case there are two files:
+
+1. [terms_explanations_train.jsonl](https://github.com/npinto97/LLM_Fine-tuning/blob/main/terms_explanations_train.jsonl);
+2. [terms_explanations_test.jsonl](https://github.com/npinto97/LLM_Fine-tuning/blob/main/terms_explanations_test.jsonl).
+
+An example of the content of those files is the following:
+
+> {"lemma": "dama", "spiegazione": "La parola dama significava originariamente signora o nobildonna, con riferimento a una donna di alto rango sociale. Nel corso del tempo, il significato si è esteso a includere anche il riferimento a una donna anziana o rispettata, a volte anche in senso ironico o affettuoso. In seguito, la parola ha assunto un significato più specifico nel contesto del gioco degli scacchi, indicando la figura femminile più potente del gioco, in grado di muoversi in tutte le direzioni sulla scacchiera. Infine, il termine è stato utilizzato anche in modo più generico per descrivere una donna di grande eleganza, raffinatezza e cultura."}
+
+### Terms sentences
+
+Those files contain WiC dataset, used for the fine-tuning of the second model. Each json element of the file is characterized by:
+
+- *id*
+- *lemma*
+- *sentence1*
+- *sentence2*
+- *start1*
+- *start2*
+- *end1*
+- *end*
+
+We collect two files, one for the training and the other for testing.
+
+1. [terms_sentences_train.jsonl](https://github.com/npinto97/LLM_Fine-tuning/blob/main/terms_sentences_train.jsonl);
+2. [terms_sentence_test.jsonl](https://github.com/npinto97/LLM_Fine-tuning/blob/main/terms_sentences_test.jsonl).
+
+An example of the content of those files is the following:
+
+> {"id": "calcio.noun.10", "lemma": "calcio", "sentence1": "Poi inizia il calcio mercato estivo : Alberto Gilardino \u00e8 uno dei nomi sulla bocca di tutti i procuratori delle maggiori squadre in Europa .", "sentence2": "PARMA CALCIO , L' ASSEMBLEA SLITTA A DATA DA DEFINIRE Slitta a data da definire l' assemblea degli azionisti del Parma Calcio , prevista in prima convocazione domani e in seconda il 9 gennaio .", "start1": 14, "end1": 20, "start2": 119, "end2": 125}
+{"id": "capitale.noun.5", "lemma": "capitale", "sentence1": "Gli inviati di Rai , Corriere della sera e Repubblica ancora nella capitale irachena sono gi\u00e0 partiti o partiranno nelle prossime 48 ore .", "sentence2": "L' intraprendenza e il discreto livello d' istruzione della popolazione vietnamita attirano capitali e imprese dall' estero .", "start1": 67, "end1": 75, "start2": 92, "end2": 100}
