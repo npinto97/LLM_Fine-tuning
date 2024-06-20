@@ -88,7 +88,7 @@ An example of the content of those files is the following:
 
 ### Terms sentences
 
-Those files contain WiC dataset, used for the fine-tuning of the second model. Each json element of the file is characterized by:
+Those files contain WiC dataset, used for the fine-tuning of the second model and for the extraction of the list of words used in gerating the synthetic dataset. Each json element of the file is characterized by:
 
 - *id*
 - *lemma*
